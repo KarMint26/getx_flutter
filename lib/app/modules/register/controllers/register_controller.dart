@@ -5,7 +5,8 @@ import 'package:getx_patt/app/data/providers/auth_provider.dart';
 class RegisterController extends GetxController {
   var isLoading = false.obs;
   var isAuthenticated = false.obs;
-  AuthService authService = AuthService();
+
+  final authService = Get.find<AuthService>();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -27,20 +28,5 @@ class RegisterController extends GetxController {
     } else {
       Get.snackbar("Error", "Registrasi gagal, coba lagi nanti");
     }
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

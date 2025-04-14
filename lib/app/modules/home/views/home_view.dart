@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_patt/app/modules/home/controllers/home_controller.dart';
+import 'package:getx_patt/app/modules/recipes/bindings/recipe_binding.dart';
 import 'package:getx_patt/app/modules/recipes/views/recipe_view.dart';
 
-class HomeView extends StatelessWidget {
-  final HomeController homeController = Get.put(HomeController());
-
+class HomeView extends GetView<HomeController> {
   final Color primaryColor = const Color.fromARGB(255, 0, 111, 155);
   final Color backgroundColor = const Color(0xFFF8F9FA);
 
@@ -31,7 +30,7 @@ class HomeView extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.logout_rounded, color: Colors.white),
                 onPressed: () {
-                  homeController.confirmLogout();
+                  controller.confirmLogout();
                 },
               ),
             ],
@@ -41,11 +40,11 @@ class HomeView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Obx(() {
-          if (homeController.isLoading.value) {
+          if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (homeController.recipes.isEmpty) {
+          if (controller.recipes.isEmpty) {
             return const Center(
               child: Text(
                 "No recipes available.",
@@ -61,13 +60,14 @@ class HomeView extends StatelessWidget {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
             ),
-            itemCount: homeController.recipes.length,
+            itemCount: controller.recipes.length,
             itemBuilder: (context, index) {
-              final recipe = homeController.recipes[index];
+              final recipe = controller.recipes[index];
 
               return GestureDetector(
                 onTap: () {
-                  Get.to(() => RecipeView(recipeId: recipe['id']));
+                  Get.to(() => RecipeView(recipeId: recipe['id']),
+                      binding: RecipeBinding());
                 },
                 child: Card(
                   color: Colors.white,

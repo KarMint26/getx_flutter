@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_patt/app/modules/recipes/controllers/recipe_controller.dart';
 
-class RecipeView extends StatelessWidget {
-  final int recipeId;
+class RecipeView extends GetView<RecipeController> {
+  RecipeView({super.key, required this.recipeId});
 
-  RecipeView({required this.recipeId});
+  final int recipeId;
 
   @override
   Widget build(BuildContext context) {
-    final RecipeController detailController = Get.put(RecipeController());
     final Color primaryColor = const Color.fromARGB(255, 0, 111, 155);
     final Color secondColor = const Color(0xFFF8F9FA);
 
-    // 🔥 Panggil data berdasarkan ID dari URL
-    detailController.fetchRecipeById(recipeId);
+    controller.fetchRecipeById(recipeId);
 
     return Scaffold(
       appBar: AppBar(
@@ -30,11 +28,11 @@ class RecipeView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Obx(() {
-            if (detailController.isLoading.value) {
+            if (controller.isLoading.value) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            var recipe = detailController.recipeDetail;
+            var recipe = controller.recipeDetail;
 
             if (recipe.isEmpty) {
               return const Center(
@@ -105,7 +103,7 @@ class RecipeView extends StatelessWidget {
                                   size: 16, color: Colors.green),
                               const SizedBox(width: 4),
                               Text(
-                                "${recipe['likes_count']?.toString() ?? '0'}",
+                                recipe['likes_count']?.toString() ?? '0',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
@@ -114,7 +112,7 @@ class RecipeView extends StatelessWidget {
                                   size: 16, color: Colors.blue),
                               const SizedBox(width: 4),
                               Text(
-                                "${recipe['comments_count']?.toString() ?? '0'}",
+                                recipe['comments_count']?.toString() ?? '0',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),

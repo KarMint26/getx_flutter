@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_patt/app/modules/login/controllers/login_controller.dart';
 
-class LoginView extends StatelessWidget {
-  final LoginController loginController = Get.find();
+class LoginView extends GetView<LoginController> {
+  LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: loginController.emailController,
+                controller: controller.emailController,
                 decoration: InputDecoration(
                   prefixIcon:
                       const Icon(Icons.person, color: Color(0xFF6A0DAD)),
@@ -39,7 +39,7 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               TextField(
-                controller: loginController.passwordController,
+                controller: controller.passwordController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock, color: Color(0xFF6A0DAD)),
                   hintText: "Password",
@@ -51,7 +51,7 @@ class LoginView extends StatelessWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 10),
-              Obx(() => loginController.isLoading.value
+              Obx(() => controller.isLoading.value
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -62,9 +62,9 @@ class LoginView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                       ),
                       onPressed: () {
-                        loginController.login(
-                          loginController.emailController.text,
-                          loginController.passwordController.text,
+                        controller.login(
+                          controller.emailController.text,
+                          controller.passwordController.text,
                         );
                       },
                       child: const Text("Login",

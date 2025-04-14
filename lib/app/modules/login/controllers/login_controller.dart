@@ -6,7 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginController extends GetxController {
   var isLoading = false.obs;
   var isAuthenticated = false.obs;
-  AuthService authService = AuthService();
+
+  final authService = Get.find<AuthService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

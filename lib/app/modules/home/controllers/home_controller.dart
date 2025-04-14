@@ -6,8 +6,10 @@ import 'package:getx_patt/app/data/providers/recipes_provider.dart';
 class HomeController extends GetxController {
   var recipes = [].obs;
   var isLoading = false.obs;
-  final RecipeService _recipeServices = RecipeService();
-  final AuthService authService = AuthService();
+  // final RecipeService _recipeServices = RecipeService();
+  // final AuthService _authService = AuthService();
+  final _recipeServices = Get.find<RecipeService>();
+  final _authService = Get.find<AuthService>();
 
   @override
   void onInit() {
@@ -30,7 +32,7 @@ class HomeController extends GetxController {
       textConfirm: "Logout",
       confirmTextColor: Colors.white,
       onConfirm: () async {
-        await authService.logout();
+        await _authService.logout();
         Get.offAllNamed('/login');
       },
     );

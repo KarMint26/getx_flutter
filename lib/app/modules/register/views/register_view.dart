@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_patt/app/modules/register/controllers/register_controller.dart';
 
-class RegisterView extends StatelessWidget {
-  final RegisterController registerController = Get.find();
+class RegisterView extends GetView<RegisterController> {
+  RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,27 +25,27 @@ class RegisterView extends StatelessWidget {
                     color: Color(0xFF6A0DAD)),
               ),
               const SizedBox(height: 30),
-              _buildTextField("Nama Lengkap", Icons.person,
-                  registerController.nameController),
-              _buildTextField("Username or Email", Icons.email,
-                  registerController.emailController),
               _buildTextField(
-                  "Password", Icons.lock, registerController.passwordController,
+                  "Nama Lengkap", Icons.person, controller.nameController),
+              _buildTextField(
+                  "Username or Email", Icons.email, controller.emailController),
+              _buildTextField(
+                  "Password", Icons.lock, controller.passwordController,
                   isPassword: true),
               _buildTextField("Confirm Password", Icons.lock,
-                  registerController.confirmPasswordController,
+                  controller.confirmPasswordController,
                   isPassword: true),
               const SizedBox(height: 20),
-              Obx(() => registerController.isLoading.value
+              Obx(() => controller.isLoading.value
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
                       onPressed: () {
-                        if (registerController.passwordController.text ==
-                            registerController.confirmPasswordController.text) {
-                          registerController.register(
-                            registerController.nameController.text,
-                            registerController.emailController.text,
-                            registerController.passwordController.text,
+                        if (controller.passwordController.text ==
+                            controller.confirmPasswordController.text) {
+                          controller.register(
+                            controller.nameController.text,
+                            controller.emailController.text,
+                            controller.passwordController.text,
                           );
                         } else {
                           Get.snackbar("Error", "Password tidak cocok!");
